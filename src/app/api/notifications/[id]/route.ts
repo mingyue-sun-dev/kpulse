@@ -1,16 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 
-interface RouteContext {
-  params: {
-    id: string;
-  };
-}
-
-export async function PATCH(request: NextRequest, context: RouteContext) {
+export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
     const supabase = await createClient();
-    const { id } = context.params;
+    const params = await context.params;
+    const { id } = params;
     const { is_seen } = await request.json();
 
     // Get current user
@@ -44,10 +39,11 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
   }
 }
 
-export async function DELETE(request: NextRequest, context: RouteContext) {
+export async function DELETE(_request: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
     const supabase = await createClient();
-    const { id } = context.params;
+    const params = await context.params;
+    const { id } = params;
 
     // Get current user
     const { data: { user }, error: authError } = await supabase.auth.getUser();

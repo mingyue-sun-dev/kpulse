@@ -5,7 +5,7 @@ import { rateLimiter } from '@/lib/rateLimiter';
 import type { CachedVideoData } from '@/lib/api/types';
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;

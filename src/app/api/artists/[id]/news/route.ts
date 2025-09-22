@@ -4,7 +4,7 @@ import { apiCache } from '@/lib/cache/simple-cache';
 import { rateLimiter } from '@/lib/rateLimiter';
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;

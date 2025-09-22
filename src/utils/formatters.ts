@@ -4,7 +4,7 @@
  * @param fallback - Fallback string when value cannot be parsed (default: 'N/A')
  * @returns Formatted number string or fallback
  */
-export function formatNumber(value: any, fallback: string = 'N/A'): string {
+export function formatNumber(value: number | string | unknown, fallback: string = 'N/A'): string {
   if (typeof value === 'number' && !isNaN(value)) {
     return value.toLocaleString();
   }
@@ -25,7 +25,7 @@ export function formatNumber(value: any, fallback: string = 'N/A'): string {
  * @param fallback - Fallback string when value cannot be parsed
  * @returns Formatted number string with suffix or fallback
  */
-export function formatNumberShort(value: any, fallback: string = 'N/A'): string {
+export function formatNumberShort(value: number | string | unknown, fallback: string = 'N/A'): string {
   let num: number;
   
   if (typeof value === 'number' && !isNaN(value)) {

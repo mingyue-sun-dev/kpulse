@@ -63,7 +63,7 @@ export default function Signup() {
               Your account has been created successfully.
             </p>
             <p className="text-sm text-gray-500">
-              You'll be redirected to the homepage in a moment...
+              You&apos;ll be redirected to the homepage in a moment...
             </p>
           </div>
         </main>

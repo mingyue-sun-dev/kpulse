@@ -348,7 +348,7 @@ export default function Dashboard() {
         {/* Following Artists Section */}
         <div id="following" className="mb-8">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Artists You're Following</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Artists You&apos;re Following</h2>
             <Link
               href="/"
               className="text-purple-600 hover:text-purple-800 font-medium"

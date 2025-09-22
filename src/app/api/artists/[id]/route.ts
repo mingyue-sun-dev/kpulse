@@ -3,7 +3,7 @@ import { artistService } from '@/lib/services/artistService';
 import { rateLimiter } from '@/lib/rateLimiter';
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
@@ -43,8 +43,8 @@ export async function GET(
       id: artistData.id,
       name: artistData.name,
       image: artistData.image,
-      debutYear: artistData.debutYear || new Date().getFullYear(),
-      company: artistData.company || 'Unknown',
+      debutYear: new Date().getFullYear(),
+      company: 'Unknown',
       members: [],
       followers: artistData.followers.toString(),
       popularity: artistData.popularity, // Spotify popularity score (0-100)

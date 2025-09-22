@@ -40,8 +40,8 @@ export async function GET(request: NextRequest) {
       image: artist.image,
       followers: artist.followers,
       popularity: artist.popularity, // Spotify popularity score (0-100)
-      debutYear: artist.debutYear || new Date().getFullYear(),
-      company: artist.company || 'Unknown'
+      debutYear: new Date().getFullYear(),
+      company: 'Unknown'
     }));
 
     console.log(`Search completed via ${result.metadata?.sources.join(', ')} - ${transformedResults.length} results`);

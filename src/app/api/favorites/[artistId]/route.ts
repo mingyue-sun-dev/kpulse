@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 // DELETE /api/favorites/[artistId] - Remove artist from favorites
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ artistId: string }> }
 ) {
   try {
@@ -59,7 +59,7 @@ export async function DELETE(
 
 // GET /api/favorites/[artistId] - Check if artist is favorited
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ artistId: string }> }
 ) {
   try {
