@@ -1,4 +1,6 @@
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -38,7 +40,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © 2024 KPulse. All rights reserved.
+            © {currentYear} KPulse. All rights reserved.
           </p>
           <div className="flex space-x-6 text-sm text-gray-400 mt-4 md:mt-0">
             <a href="#" className="hover:text-white">Privacy Policy</a>
