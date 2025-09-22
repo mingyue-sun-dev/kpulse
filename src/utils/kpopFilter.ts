@@ -11,14 +11,6 @@ interface ArtistData {
   popularity?: number;
 }
 
-// Known K-pop entertainment companies and labels
-const KPOP_COMPANIES = [
-  'sm entertainment', 'yg entertainment', 'jyp entertainment', 'hybe', 'hybe labels',
-  'big hit entertainment', 'starship entertainment', 'cube entertainment', 
-  'fnc entertainment', 'woolim entertainment', 'pledis entertainment',
-  'source music', 'ador', 'koz entertainment', 'belift lab',
-  'stone music entertainment', '1thek', 'mnet', 'kakao entertainment'
-];
 
 // K-pop specific genres and keywords
 const KPOP_GENRES = [

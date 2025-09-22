@@ -131,7 +131,7 @@ class ArtistService {
             id: unifiedId,
             name: artist.name,
             image: artist.image?.[2]?.['#text'] || '/placeholder-artist.jpg',
-            followers: parseInt(artist.listeners || '0'), // Last.fm calls it 'listeners' but it's really followers
+            followers: parseInt(artist.stats?.listeners || '0'), // Last.fm calls it 'listeners' but it's really followers
             source: 'lastfm' as const
           };
         });
@@ -235,11 +235,12 @@ class ArtistService {
 
       // Aggregate data with smart fallbacks - only include data that actually exists
       const rawBio = lastFmData?.bio?.content || lastFmData?.bio?.summary;
+      const cleanedBio = this.cleanBiography(rawBio);
       const artistData: ArtistDTO = {
         id: unifiedId,
         name: spotifyData?.name || lastFmData?.name || artistName,
         image: spotifyData?.images?.[0]?.url || lastFmData?.image?.[3]?.['#text'] || '/placeholder-artist.jpg',
-        biography: this.cleanBiography(rawBio),
+        ...(cleanedBio && { biography: cleanedBio }),
         followers: spotifyData?.followers?.total || 0,
         popularity: spotifyData?.popularity,
         genres: spotifyData?.genres || [],
@@ -318,14 +319,17 @@ class ArtistService {
         }
         
         if (spotifyResult.success && spotifyResult.data) {
-          const unifiedTracks: TrackDTO[] = spotifyResult.data.map((track, index) => ({
-            id: `${artistName}-track-${index}`,
-            title: track.name || `Track ${index + 1}`,
-            duration: track.duration_ms ? Math.round(track.duration_ms / 1000) : undefined,
-            spotifyId: track.id,
-            spotifyPreviewUrl: track.preview_url,
-            source: 'spotify' as const
-          }));
+          const unifiedTracks: TrackDTO[] = spotifyResult.data.map((track, index) => {
+            const durationInSeconds = track.duration_ms ? Math.round(track.duration_ms / 1000) : undefined;
+            return {
+              id: `${artistName}-track-${index}`,
+              title: track.name || `Track ${index + 1}`,
+              ...(durationInSeconds && { duration: durationInSeconds }),
+              spotifyId: track.id,
+              spotifyPreviewUrl: track.preview_url,
+              source: 'spotify' as const
+            };
+          });
 
           return unifiedTracks;
         }
@@ -336,13 +340,17 @@ class ArtistService {
       const lastFmResult = await lastFmService.getArtistTopTracks(lastFmName, limit);
       
       if (lastFmResult.success) {
-        const unifiedTracks: TrackDTO[] = lastFmResult.data.map((track, index) => ({
-          id: `${artistName}-track-${index}`,
-          title: track.name,
-          duration: track.duration ? parseInt(track.duration) : undefined,
-          plays: track.playcount ? parseInt(track.playcount) : undefined,
-          source: 'lastfm' as const
-        }));
+        const unifiedTracks: TrackDTO[] = lastFmResult.data.map((track, index) => {
+          const durationInSeconds = track.duration ? parseInt(track.duration) : undefined;
+          const playCount = track.playcount ? parseInt(track.playcount) : undefined;
+          return {
+            id: `${artistName}-track-${index}`,
+            title: track.name,
+            ...(durationInSeconds && { duration: durationInSeconds }),
+            ...(playCount && { plays: playCount }),
+            source: 'lastfm' as const
+          };
+        });
 
         return unifiedTracks;
       }
@@ -667,14 +675,18 @@ class ArtistService {
       if (!artistResult.success) {
         return {
           success: false,
-          error: artistResult.error
+          error: artistResult.error || {
+            message: 'Failed to fetch artist data',
+            source: 'aggregation' as const
+          }
         };
       }
 
+      const albumData = albumResult.success ? albumResult.data! : null;
       const completeData: CompleteArtistDataDTO = {
         artist: artistResult.data!,
         topTracks: tracksResult.success ? tracksResult.data! : [],
-        latestAlbum: albumResult.success ? albumResult.data! : undefined,
+        ...(albumData && { latestAlbum: albumData }),
         topAlbums: [], // TODO: Implement if needed
         similarArtists: relatedResult.success ? relatedResult.data! : [],
         aggregatedAt: new Date().toISOString(),

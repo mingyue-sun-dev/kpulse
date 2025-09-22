@@ -27,6 +27,7 @@ interface MusicVideo {
     viewCount?: number;
     duration?: string;
     score?: number;
+    isOfficial?: boolean;
   };
   embedUrl: string;
   url: string;
