@@ -4,6 +4,8 @@
 
 KPulse is a comprehensive K-Pop artist discovery platform that aggregates real-time data from multiple APIs to provide fans with artist statistics, music, videos, news, and social features.
 
+**[🚀 Live Demo](https://kpulse.vercel.app/)**
+
 ## Tech Stack
 
 - **Frontend**: Next.js 15, TypeScript, Tailwind CSS 4
