@@ -154,7 +154,7 @@ class YouTubeService {
 
     return {
       success: true,
-      data: result.data.items || []
+      data: (result.data as any)?.items || []
     };
   }
 
@@ -197,7 +197,7 @@ class YouTubeService {
     quotaTracker.recordUsage(1);
     return {
       success: true,
-      data: result.data.items || []
+      data: (result.data as any)?.items || []
     };
   }
 

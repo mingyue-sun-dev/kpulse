@@ -4,7 +4,6 @@ import Header from '@/components/ui/Header';
 import Footer from '@/components/ui/Footer';
 import Card from '@/components/ui/Card';
 import { useEffect, useState, lazy, Suspense } from 'react';
-import Link from 'next/link';
 
 const ArtistCarousel = lazy(() => import('@/components/artist/ArtistCarousel'));
 import { artistCache, newsCache } from '@/lib/cache/client-cache';

@@ -174,7 +174,7 @@ class LastFmService {
       url: album.url,
       image: this.getBestImage(album.image, 'large'), // Last.fm still provides album images
       year: '0', // Last.fm doesn't provide year in top albums
-      tracks: '0' // Last.fm doesn't provide track count in top albums
+      tracks: 0 // Last.fm doesn't provide track count in top albums
     }));
 
     return {

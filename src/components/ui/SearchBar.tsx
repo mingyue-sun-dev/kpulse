@@ -12,7 +12,7 @@ interface SearchBarProps {
 export default function SearchBar({ placeholder = "Search for K-Pop artists..." }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const [showResults, setShowResults] = useState(false);
-  const { searchArtists, searchLiveArtists, loading } = useArtist();
+  const { searchArtists, searchLiveArtists, loading: _loading } = useArtist();
   const router = useRouter();
 
   const [results, setResults] = useState<any[]>([]);

@@ -54,10 +54,10 @@ export function useNotifications(limit: number = 20): UseNotificationsReturn {
 
   // Initial load and auth state changes
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN') {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, _session) => {
+      if (_event === 'SIGNED_IN') {
         fetchNotifications();
-      } else if (event === 'SIGNED_OUT') {
+      } else if (_event === 'SIGNED_OUT') {
         setNotifications([]);
         setUnseenCount(0);
         setIsLoading(false);

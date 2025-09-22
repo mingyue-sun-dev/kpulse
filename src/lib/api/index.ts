@@ -18,7 +18,7 @@ export interface ApiResponse<T> {
 }
 
 export function createApiError(message: string, code?: string, status?: number): ApiError {
-  return { message, code, status };
+  return { message, code: code ?? '', status: status ?? 500 };
 }
 
 export function createApiResponse<T>(data: T): ApiResponse<T> {

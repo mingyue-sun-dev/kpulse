@@ -55,7 +55,7 @@ interface AnimatingFollow extends FollowedArtist {
 }
 
 export default function Dashboard() {
-  const [user, setUser] = useState<User | null>(null)
+  const [_user, setUser] = useState<User | null>(null)
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null)
   const [animatingFavorites, setAnimatingFavorites] = useState<AnimatingFavorite[]>([])
   const [animatingFollows, setAnimatingFollows] = useState<AnimatingFollow[]>([])

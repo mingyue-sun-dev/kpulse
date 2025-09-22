@@ -44,6 +44,8 @@ export default function NotificationBell({ className = '' }: NotificationBellPro
       document.addEventListener('keydown', handleEscape);
       return () => document.removeEventListener('keydown', handleEscape);
     }
+
+    return () => {};
   }, [isOpen]);
 
   const handleToggle = () => {

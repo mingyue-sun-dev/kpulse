@@ -72,9 +72,9 @@ class ArtistMappingCache {
     
     const mapping: ArtistMapping = {
       unifiedId: data.unifiedId,
-      spotifyId: data.spotifyId || existing?.spotifyId,
-      spotifyName: data.spotifyName || existing?.spotifyName,
-      lastFmName: data.lastFmName || existing?.lastFmName,
+      spotifyId: data.spotifyId || existing?.spotifyId || "",
+      spotifyName: data.spotifyName || existing?.spotifyName || "",
+      lastFmName: data.lastFmName || existing?.lastFmName || "",
       lastUpdated: Date.now()
     };
 
@@ -93,7 +93,7 @@ class ArtistMappingCache {
     const now = Date.now();
     let expired = 0;
 
-    for (const [key, mapping] of this.cache) {
+    for (const [_key, mapping] of this.cache) {
       if (now - mapping.lastUpdated > this.TTL) {
         expired++;
       }
@@ -112,9 +112,9 @@ class ArtistMappingCache {
     const now = Date.now();
     const toDelete: string[] = [];
 
-    for (const [key, mapping] of this.cache) {
+    for (const [_key, mapping] of this.cache) {
       if (now - mapping.lastUpdated > this.TTL) {
-        toDelete.push(key);
+        toDelete.push(_key);
       }
     }
 

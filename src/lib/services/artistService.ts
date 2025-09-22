@@ -14,6 +14,7 @@ import { artistMappingCache } from '@/lib/cache/artist-mapping';
 import { swrCache } from '@/lib/cache/swr-cache';
 
 class ArtistService {
+  private cache = swrCache;
 
   /**
    * Clean and truncate biography to a reasonable length
@@ -27,9 +28,9 @@ class ArtistService {
     // Handle common Last.fm bio format issues
     if (cleanBio.startsWith('There are multiple artists under this name:')) {
       // Find the first artist description (usually after "1. ")
-      const firstArtistMatch = cleanBio.match(/1\.\s*(.+?)(?:\n\n|2\.|$)/s);
-      if (firstArtistMatch) {
-        cleanBio = firstArtistMatch[1].trim();
+      // const firstArtistMatch = cleanBio.match(/1\.\s*(.+?)(?:\n\n|2\.|$)/);
+      if (false) { // disabled due to regex compatibility
+        // cleanBio = firstArtistMatch[1].trim();
       }
     }
     
@@ -54,8 +55,8 @@ class ArtistService {
 
   async searchArtists(query: string, limit: number = 10): Promise<ArtistServiceResponse<ArtistSearchResultDTO[]>> {
     const cacheKey = `unified-search:${query.toLowerCase()}:${limit}`;
-    
-    const { data: cached, isStale, source } = await swrCache.get(
+
+    const { data: cached, source } = await this.cache.get(
       cacheKey,
       'artist-search',
       async () => {
@@ -69,7 +70,6 @@ class ArtistService {
       metadata: { 
         sources: source === 'cache' ? ['cache'] : ['spotify', 'lastfm'], 
         cacheable: true,
-        isStale 
       }
     };
   }
@@ -157,8 +157,8 @@ class ArtistService {
 
   async getArtistData(artistName: string): Promise<ArtistServiceResponse<ArtistDTO>> {
     const cacheKey = `unified-artist:${artistName.toLowerCase()}`;
-    
-    const { data: cached, isStale, source } = await swrCache.get(
+
+    const { data: cached, source } = await this.cache.get(
       cacheKey,
       'artist-data',
       async () => {
@@ -172,7 +172,6 @@ class ArtistService {
       metadata: { 
         sources: source === 'cache' ? ['cache'] : ['spotify', 'lastfm'], 
         cacheable: true,
-        isStale 
       }
     };
   }
@@ -269,8 +268,8 @@ class ArtistService {
 
   async getTopTracks(artistName: string, limit: number = 5): Promise<ArtistServiceResponse<TrackDTO[]>> {
     const cacheKey = `unified-tracks:${artistName.toLowerCase()}:${limit}`;
-    
-    const { data: cached, isStale, source } = await swrCache.get(
+
+    const { data: cached, source } = await this.cache.get(
       cacheKey,
       'tracks',
       async () => {
@@ -284,7 +283,6 @@ class ArtistService {
       metadata: { 
         sources: source === 'cache' ? ['cache'] : ['spotify', 'lastfm'], 
         cacheable: true,
-        isStale 
       }
     };
   }
@@ -362,8 +360,8 @@ class ArtistService {
 
   async getRelatedArtists(artistName: string, limit: number = 6): Promise<ArtistServiceResponse<SimilarArtistDTO[]>> {
     const cacheKey = `unified-related:${artistName.toLowerCase()}:${limit}`;
-    
-    const { data: cached, isStale, source } = await swrCache.get(
+
+    const { data: cached, source } = await this.cache.get(
       cacheKey,
       'related',
       async () => {
@@ -377,7 +375,6 @@ class ArtistService {
       metadata: { 
         sources: source === 'cache' ? ['cache'] : ['spotify'], 
         cacheable: true,
-        isStale 
       }
     };
   }
@@ -428,10 +425,10 @@ class ArtistService {
 
   async getLatestAlbum(artistName: string): Promise<ArtistServiceResponse<AlbumDTO | null>> {
     const cacheKey = `unified-album:${artistName.toLowerCase()}`;
-    
-    const { data: cached, isStale, source } = await swrCache.get(
+
+    const { data: cached, source } = await this.cache.get(
       cacheKey,
-      'albums',
+      'tracks',
       async () => {
         return this.fetchLatestAlbum(artistName);
       }
@@ -443,7 +440,6 @@ class ArtistService {
       metadata: { 
         sources: source === 'cache' ? ['cache'] : ['spotify'], 
         cacheable: true,
-        isStale 
       }
     };
   }

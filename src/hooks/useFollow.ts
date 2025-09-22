@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { Follow } from '@/lib/supabase/types';
+// import { Follow } from '@/lib/supabase/types';
 
 interface UseFollowOptions {
   artistId: string;

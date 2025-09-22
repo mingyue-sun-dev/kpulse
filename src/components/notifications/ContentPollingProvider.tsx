@@ -8,7 +8,7 @@ interface ContentPollingProviderProps {
 }
 
 export default function ContentPollingProvider({ children }: ContentPollingProviderProps) {
-  const { isChecking, lastChecked, error, checkNow, newContentFound } = useContentPolling({
+  const { isChecking: _isChecking, lastChecked, error, checkNow, newContentFound } = useContentPolling({
     enabled: true,
     intervalMs: 5 * 60 * 1000 // Check every 5 minutes when app is open
   });

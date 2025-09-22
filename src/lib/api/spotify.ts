@@ -188,7 +188,7 @@ class SpotifyService {
   }
 
   // Helper method to get the best image from Spotify image array
-  private getBestImage(images: SpotifyImage[]): string | null {
+  private getBestImage(images: any[]): string | null {
     if (!images || images.length === 0) {
       return null;
     }

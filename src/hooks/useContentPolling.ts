@@ -30,7 +30,7 @@ export function useContentPolling({
 
   // Track user authentication
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
       setUser(session?.user || null);
     });
 

@@ -36,7 +36,7 @@ export default function FavoriteButton({
     getUser()
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      (_, session) => {
         setUser(session?.user ?? null)
         if (session?.user) {
           checkFavoriteStatus()

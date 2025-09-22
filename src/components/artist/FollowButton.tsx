@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { Follow } from '@/lib/supabase/types';
+// import { Follow } from '@/lib/supabase/types';
 
 interface FollowButtonProps {
   artistId: string;
@@ -97,8 +97,8 @@ export default function FollowButton({
     checkAuthAndFollowStatus();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, _session) => {
+      if (_event === 'SIGNED_IN' || _event === 'SIGNED_OUT') {
         checkAuthAndFollowStatus();
       }
     });
